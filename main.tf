@@ -112,15 +112,15 @@ tags {
   }
 }
 
-output "Swarm masters' public IPs" {
+output "swarm_masters_ips" {
     value = ["${aws_instance.master.public_ip}"]
 }
 
-output "Swarm workers public IPs" {
+output "swarm_workers_ips" {
     value = ["${aws_instance.worker.*.public_ip}"]
 }
 
-output "Nginx public IP:" {
+output "nginx_ip" {
   value = "${aws_instance.nginx.public_ip}"
 }
 
