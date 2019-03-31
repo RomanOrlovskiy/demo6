@@ -11,6 +11,10 @@ variable "ubuntu_ami" {
   description = "Ubuntu 18.04 Linux AMI"
   default = "ami-005bdb005fb00e791"
 }
+variable "docker_ubuntu_ami" {
+  description = "Docker on ubuntu 18.04"
+  default = "ami-02fc91ce0316c43a4"
+}
 variable "aws_ami" {
   description = "AWS default Linux AMI 2"
   default = "ami-032509850cf9ee54e"
@@ -73,7 +77,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "master" {
-  ami = "${var.ubuntu_ami}"
+  ami = "${var.docker_ubuntu_ami}"
   instance_type = "${var.instance_type}"
   key_name = "${var.key_name}"
   subnet_id = "${var.public_vpc_subnet}"
@@ -85,7 +89,7 @@ tags {
 }
 
 resource "aws_instance" "worker" {
-  ami = "${var.ubuntu_ami}"
+  ami = "${var.docker_ubuntu_ami}"
   instance_type = "${var.instance_type}"
   key_name = "${var.key_name}"
   user_data = "${file("${var.bootstrap_path}")}"
