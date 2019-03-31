@@ -7,11 +7,13 @@
     vars:
       ansible_python_interpreter: /usr/bin/python3
       user: ubuntu
+
     tasks:
       - name: "Wait for SSH port to open"
         wait_for:
           port: 22
           host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+          delay: 30
 
       - name: Add user to docker group
         command: usermod -aG docker {{ user }}
@@ -49,6 +51,7 @@
         wait_for:
           port: 22
           host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+          delay: 20
 
       - name: Add user to docker group
         command: usermod -aG docker {{ user }}
