@@ -1,4 +1,3 @@
-*.cfg
 *.retry
 *.state
 .terraform
