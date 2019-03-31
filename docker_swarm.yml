@@ -6,9 +6,17 @@
     remote_user: ubuntu
     vars:
       ansible_python_interpreter: /usr/bin/python3
+      user: ubuntu
     tasks:
+      - name: "Wait for SSH port to open"
+        wait_for:
+          port: 22
+          host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+
+      - name: Add user to docker group
+        command: usermod -aG docker {{ user }}
+
       - name: Swarm Init
-        command: sudo usermod -aG docker {{remote_user}}
         command: docker swarm init --advertise-addr {{ inventory_hostname }}
 
       - name: Get Worker Token
@@ -35,10 +43,18 @@
       ansible_python_interpreter: /usr/bin/python3
       token: "{{ hostvars[groups['tag_Name_swarm_masters'][0]]['worker_token']['stdout'] }}"
       master: "{{ hostvars[groups['tag_Name_swarm_masters'][0]]['inventory_hostname'] }}"
+      user: ubuntu
     tasks:
+      - name: "Wait for SSH port to open"
+        wait_for:
+          port: 22
+          host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+
+      - name: Add user to docker group
+        command: usermod -aG docker {{ user }}
+
       - name: Join Swarm Cluster as a Worker
-        command: sudo usermod -aG docker {{remote_user}}
-        command: sudo docker swarm join --token {{ token }} {{ master }}:2377
+        command: docker swarm join --token {{ token }} {{ master }}:2377
         register: worker
 
       - name: Show Results
