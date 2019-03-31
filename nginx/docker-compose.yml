@@ -1,0 +1,33 @@
+version: "3.3"
+services:
+  nginx:
+    image: quitequiet/nginx
+    build: ./nginx
+
+    depends_on:
+      - tomcat
+    ports:
+      - "80:80"
+    networks:
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 2
+      constraints:
+        - node.role == worker
+  tomcat:
+    image: tomcat
+    networks:
+      - backend
+    ports:
+      - target: 8080
+        published: 8080
+    deploy:
+      mode: replicated
+      replicas: 2
+      placement:
+        constraints:
+          - node.role == worker
+
+networks:
+  backend:

@@ -1,0 +1,9 @@
+---
+  - hosts: tag_Name_Centos_Nginx
+
+    become: yes
+    become_method: sudo
+    remote_user: ec2-user
+
+    roles:
+      - nginx

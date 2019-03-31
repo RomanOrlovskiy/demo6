@@ -1,0 +1,9 @@
+  - hosts:
+      - tag_Name_swarm_workers
+      - tag_Name_swarm_masters
+    become: yes
+    become_method: sudo
+    remote_user: ubuntu
+
+    roles:
+      - add_swap_space

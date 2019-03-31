@@ -1,0 +1,6 @@
+#Examples
+
+#connect to remote docker host and deploy your stack
+ssh -p 22 -fNL localhost:2374:/var/run/docker.sock ubuntu@swarm-master-machine-ip
+export DOCKER_HOST=tcp://127.0.0.1:2374
+docker stack deploy --compose-file=docker-compose.yml test-stack

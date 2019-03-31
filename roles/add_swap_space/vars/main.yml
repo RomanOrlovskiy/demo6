@@ -1,0 +1,4 @@
+---
+# vars file for add_swap_space
+swap_file_path: /swapfile
+swap_file_count: 2048

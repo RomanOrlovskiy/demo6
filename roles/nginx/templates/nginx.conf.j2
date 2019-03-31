@@ -1,0 +1,29 @@
+events {
+  worker_connections 768;
+}
+
+http {
+
+  log_format upstreamlog '$remote_addr to: $upstream_addr [$request] '
+  'upstream_response_time $upstream_response_time '
+  'msec $msec request_time $request_time';
+
+  upstream backend {
+    {% for host in groups['tag_Name_swarm_workers'] %}
+    server {{ hostvars[host].ansible_host }};
+    {% endfor %}
+  }
+
+  server {
+    listen 80;
+
+    access_log /var/log/nginx/access.log upstreamlog;
+
+    location / {
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header X-Forwarded-Server $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_pass http://backend;
+    }
+  }
+}

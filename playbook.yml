@@ -1,0 +1,6 @@
+---
+# Main configuration file
+
+- import_playbook: nginx.yml
+- import_playbook: swap.yml
+- import_playbook: docker_swarm.yml
