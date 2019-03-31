@@ -2,8 +2,6 @@ version: "3.3"
 services:
   tomcat:
     image: quitequiet/broadleaf-site-hsqldb-app
-    networks:
-      - backend
     ports:
       - target: 8080
         published: 8080
@@ -13,6 +11,3 @@ services:
       placement:
         constraints:
           - node.role == worker
-          
-networks:
-  backend:
