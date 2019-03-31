@@ -4,6 +4,7 @@
     become: yes
     become_method: sudo
     remote_user: ec2-user
+    gather_facts: no
 
     roles:
       - nginx
