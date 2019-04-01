@@ -31,7 +31,7 @@
     state: present
   register: result
   retries: 5
-  until: result | succeeded   # or from 2.5+ `result is succeeded`
+  until: result is succeeded   # or from 2.5+ `result is succeeded`
   delay: 10
 
 - name: Setup nginx conf

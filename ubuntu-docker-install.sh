@@ -1,4 +1,6 @@
 #!/bin/bash
+#Used this in terraform for user.data previously. Than had to create an AMI instead, as it was taking too much time
+#and due to this there were conflicts with Ansible
 
 export LC_ALL=C
 sudo apt-get update -y

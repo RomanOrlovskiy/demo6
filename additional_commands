@@ -8,3 +8,21 @@ docker stack deploy --compose-file=docker-compose.yml test-stack
 #Dynamic connection using terraform output
 export SWARM_MASTER_IP=`terraform output -json "swarm_masters_ips" | python -c "import sys, json; print json.load(sys.stdin)['value'][0]"`
 ssh -o StrictHostKeyChecking=no ubuntu@${SWARM_MASTER_IP} docker info
+
+
+#AWS AMI2 ansible installation
+sudo -i
+yum update -y
+wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+rpm -ivh epel-release-latest-7.noarch.rpm
+yum install ansible -y
+yum install python2-boto -y
+
+#AWS AMI2 docker installation
+sudo amazon-linux-extras install docker
+sudo service docker start
+sudo usermod -a -G docker ec2-user
+exit
+#relogin and check groups
+groups
+docker info
