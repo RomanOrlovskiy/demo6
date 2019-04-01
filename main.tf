@@ -95,7 +95,7 @@ resource "aws_instance" "worker" {
   user_data = "${file("${var.bootstrap_path}")}"
   subnet_id = "${var.public_vpc_subnet}"
   vpc_security_group_ids = ["${aws_security_group.sgswarm.id}"]
-  count = 3
+  count = 2
 tags {
     Name  = "swarm_workers"
   }
