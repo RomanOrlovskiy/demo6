@@ -26,3 +26,9 @@ exit
 #relogin and check groups
 groups
 docker info
+
+#Minor update to code base
+cd ~/EPAM_labs/maven/CommunityDemo
+echo "Hello!" >> README.md
+git commit -am "New update"
+git push origin test
